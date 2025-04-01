@@ -100,17 +100,35 @@ if uploaded_file is not None:
 
         if selected_user == 'Overall':
             st.title('Most Busy Users')
-            x, new_df = helper.most_busy_users(df)
-            fig, ax = plt.subplots()
+            st.markdown("### Identifying the Most Active Users 📊")
 
+
+            # Get the data for busy users
+            x, new_df = helper.most_busy_users(df)
+
+            # Create a subplot with enhanced aesthetics
+            fig, ax = plt.subplots(figsize=(8, 4), dpi=100)
             col1, col2 = st.columns(2)
 
             with col1:
-                ax.bar(x.index, x.values, color='red')
-                plt.xticks(rotation='vertical')
+                # Enhance the bar plot
+                ax.bar(x.index, x.values, color=plt.cm.coolwarm(range(len(x))), edgecolor='black')
+                plt.xticks(rotation='vertical', fontsize=10)
+                plt.title("Top Active Users", fontsize=14, fontweight='bold')
+                plt.xlabel("User", fontsize=12)
+                plt.ylabel("Message Count", fontsize=12)
+                plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+                # Add data labels on top of each bar
+                for i, v in enumerate(x.values):
+                    ax.text(i, v + 0.5, str(v), ha='center', fontweight='bold', fontsize=10)
+
                 st.pyplot(fig)
+
             with col2:
-                st.dataframe(new_df)
+                # Enhanced DataFrame display
+                st.markdown("#### Detailed User Activity 📋")
+                st.dataframe(new_df.style.highlight_max(color='lightgreen', axis=0))
 
         # Emoji Analysis
         st.markdown("## 😀 Emoji Analysis")
