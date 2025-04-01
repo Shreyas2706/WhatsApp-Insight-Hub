@@ -129,7 +129,7 @@ if uploaded_file is not None:
             with col2:
                 # Enhanced DataFrame display
                 st.markdown("#### Detailed User Activity 📋")
-                st.dataframe(new_df)
+                st.dataframe(new_df.style.highlight_max(color='lightgreen', axis=0))
 
         # Emoji Analysis
         st.markdown("## 😀 Emoji Analysis")
