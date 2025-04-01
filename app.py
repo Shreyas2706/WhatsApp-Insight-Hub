@@ -98,6 +98,20 @@ if uploaded_file is not None:
         ax.set_ylabel("Number Of Messages", color='blue')
         st.pyplot(fig)
 
+        if selected_user == 'Overall':
+            st.title('Most Busy Users')
+            x, new_df = helper.most_busy_users(df)
+            fig, ax = plt.subplots()
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                ax.bar(x.index, x.values, color='red')
+                plt.xticks(rotation='vertical')
+                st.pyplot(fig)
+            with col2:
+                st.dataframe(new_df)
+
         # Emoji Analysis
         st.markdown("## 😀 Emoji Analysis")
         emoji_df = helper.emoji_helper(selected_user, df)
