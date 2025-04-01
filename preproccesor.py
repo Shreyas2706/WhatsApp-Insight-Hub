@@ -9,10 +9,14 @@ def preprocess(data):
     dates = re.findall(pattern, data)
 
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
-
-    df['message_date'] = df['message_date'].str.rstrip(' - ')
-
-    df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p', errors='coerce')
+    df['message_date'] = df['message_date'].apply(lambda x: str(x).rstrip(' - ') if pd.notnull(x) else x)
+    try:
+        df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p', errors='coerce')
+        # Fallback in case the format is different (e.g., day first)
+        if df['message_date'].isnull().all():
+            df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M %p', errors='coerce')
+    except Exception as e:
+        print(f"Error while parsing dates: {e}")
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
