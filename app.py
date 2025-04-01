@@ -101,7 +101,8 @@ if uploaded_file is not None:
         if selected_user == 'Overall':
             st.title('Most Busy Users')
             st.markdown("### Identifying the Most Active Users 📊")
-
+            st.markdown(
+                "Here, you can see the users who are most engaged, presented both visually and in tabular form for a clear understanding.")
 
             # Get the data for busy users
             x, new_df = helper.most_busy_users(df)
