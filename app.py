@@ -171,7 +171,7 @@ if uploaded_file is not None:
 
         # Footer
         st.markdown("---")
-        st.markdown("Designed and Developed by Shreyas Singh - Shrevi")
+        st.markdown("Designed and Developed Rohit Prajapati")
 
 else:
     st.sidebar.info("Upload a WhatsApp chat file to start analysis.")
